@@ -1,0 +1,9 @@
+{ sw_vers
+  echo "-- boot-args"; nvram boot-args
+  echo "-- sip"; csrutil status
+  echo "-- kext ada?"
+  ls -d /System/Library/Extensions/AppleIntel*Graphics* /System/Library/Extensions/AppleIntel*Framebuffer* 2>/dev/null
+  echo "-- loaded"; kextstat | grep -iE 'intel|graphics|lilu|weg|whatever'
+  echo "-- iGPU"; ioreg -l -p IOService -n IGPU -r | grep -iE 'model|device-id|IOGLBundleName|MetalPluginName'
+  echo "-- patch dirs"; ls /Library/Extensions 2>/dev/null; ls "/Library/Application Support/Dortania" 2>/dev/null
+} > /Users/Shared/igfx.txt 2>&1; cat /Users/Shared/igfx.txt
